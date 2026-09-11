@@ -67,27 +67,81 @@ body {
 .card-top {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .card h3 {
-  margin: 0 0 6px;
+  margin: 0;
   font-size: 17px;
+  line-height: 1.35;
+  flex: 1 1 220px;
 }
 
-.card p {
-  margin: 0;
+.deadline-badge {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #555;
+  background: #f1f2f8;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.card.urgent .deadline-badge {
+  color: #c73838;
+  background: #fdeaea;
+}
+
+.card.soon .deadline-badge {
+  color: #b8791f;
+  background: #fbf1e0;
+}
+
+.card-desc {
+  margin-top: 10px;
+}
+
+.card-desc p {
+  margin: 0 0 8px;
   color: #555;
   font-size: 14px;
   line-height: 1.5;
 }
 
-.deadline-badge {
-  font-size: 13px;
+.card-desc p:last-child {
+  margin-bottom: 0;
+}
+
+.desc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.desc-list li {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.45;
+  background: #f8f9fc;
+  padding: 7px 10px;
+  border-radius: 8px;
+}
+
+.desc-link {
+  color: #4741e8;
   font-weight: 600;
-  white-space: nowrap;
-  color: #555;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.desc-link:hover {
+  text-decoration: underline;
 }
 
 .empty {

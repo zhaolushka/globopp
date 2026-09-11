@@ -36,6 +36,56 @@ function urgencyClass(deadline) {
   return '';
 }
 
+// Emoji range used as "bullet markers" people naturally type before
+// a Дата / Формат / Цена / Ссылка segment (📅 👤 💰 🔗 📌 🎓 🌍 etc).
+const EMOJI_BULLET = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u2B00-\u2BFF]/u;
+
+function splitDescription(text) {
+  if (!text) return { intro: '', items: [] };
+  const parts = text
+    .split(new RegExp(`(?=${EMOJI_BULLET.source})`, 'gu'))
+    .map((p) => p.replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+
+  if (parts.length <= 1) {
+    return { intro: text.trim(), items: [] };
+  }
+  const startsWithEmoji = EMOJI_BULLET.test(parts[0][0] || '');
+  return {
+    intro: startsWithEmoji ? '' : parts[0],
+    items: startsWithEmoji ? parts : parts.slice(1),
+  };
+}
+
+function linkify(text) {
+  const chunks = text.split(/(https?:\/\/[^\s]+)/g);
+  return chunks.map((chunk, i) =>
+    /^https?:\/\//.test(chunk) ? (
+      <a key={i} href={chunk} target="_blank" rel="noreferrer" className="desc-link">
+        {chunk.length > 42 ? `${chunk.slice(0, 39)}…` : chunk}
+      </a>
+    ) : (
+      <span key={i}>{chunk}</span>
+    )
+  );
+}
+
+function ActivityDescription({ text }) {
+  const { intro, items } = splitDescription(text);
+  return (
+    <div className="card-desc">
+      {intro && <p>{linkify(intro)}</p>}
+      {items.length > 0 && (
+        <ul className="desc-list">
+          {items.map((item, i) => (
+            <li key={i}>{linkify(item)}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export default function Home({ activities, botUsername }) {
   const upcoming = activities.filter(
     (a) => new Date(a.deadline).getTime() >= Date.now() - 1000 * 60 * 60 * 24
@@ -71,7 +121,7 @@ export default function Home({ activities, botUsername }) {
             <h3>{a.title}</h3>
             <span className="deadline-badge">до {formatDeadline(a.deadline)}</span>
           </div>
-          {a.description && <p>{a.description}</p>}
+          {a.description && <ActivityDescription text={a.description} />}
         </div>
       ))}
 
