@@ -261,7 +261,6 @@ export default function Home({ activities, botUsername }) {
               <a
                 href={`https://t.me/${botUsername}?start=join`}
                 target="_blank"
-                rel="noreferrer"
                 className="nav-telegram"
               >
                 Telegram
@@ -550,7 +549,6 @@ export default function Home({ activities, botUsername }) {
               <a
                 href={`https://t.me/${botUsername}?start=join`}
                 target="_blank"
-                rel="noreferrer"
                 className="telegram-button"
               >
                 Connect Telegram
