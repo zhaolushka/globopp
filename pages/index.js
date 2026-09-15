@@ -1,4 +1,3 @@
-
 import Head from 'next/head';
 import Link from 'next/link';
 import { getSupabaseClient } from '../lib/supabase';
@@ -234,6 +233,21 @@ export default function Home({ activities, botUsername }) {
             <a href="#categories">Categories</a>
             <a href="#guides">Guides</a>
 
+            {/* Кнопка Личного кабинета */}
+            <Link
+              href="/login"
+              style={{
+                padding: '8px 15px',
+                borderRadius: '999px',
+                background: '#f0edff',
+                color: '#6b5cff',
+                fontWeight: 700,
+                textDecoration: 'none',
+              }}
+            >
+              Личный кабинет 🎯
+            </Link>
+
             {botUsername && (
               <a
                 href={`https://t.me/${botUsername}?start=join`}
@@ -267,17 +281,16 @@ export default function Home({ activities, botUsername }) {
               </h1>
 
               <p>
-                Discover olympiads, hackathons, scholarships,
-                volunteering, programs and courses in one place.
+                Пройди короткий тест, определи свое направление и получи пошаговый 3-месячный план развития со всеми дедлайнами и конкурсами.
               </p>
 
               <div className="hero-buttons">
-                <a href="#opportunities" className="primary-button">
-                  Explore opportunities
-                </a>
+                <Link href="/login" className="primary-button">
+                  Пройти тест и составить план →
+                </Link>
 
-                <a href="#categories" className="secondary-button">
-                  Browse categories
+                <a href="#opportunities" className="secondary-button">
+                  Все возможности
                 </a>
               </div>
 
@@ -632,9 +645,14 @@ export default function Home({ activities, botUsername }) {
             Find opportunities. Build your future.
           </p>
 
-          <Link href="/admin" className="admin-link">
-            Admin
-          </Link>
+          <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+            <Link href="/login" className="admin-link">
+              Личный кабинет
+            </Link>
+            <Link href="/admin" className="admin-link">
+              Admin
+            </Link>
+          </div>
 
         </footer>
 
