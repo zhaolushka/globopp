@@ -30,8 +30,17 @@ function formatDeadline(deadline) {
 }
 
 function getDaysLeft(deadline) {
-  const diff = new Date(deadline).getTime() - Date.now();
-  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  const now = new Date();
+  const deadlineDate = new Date(deadline);
+
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const startOfDeadline = new Date(
+    deadlineDate.getFullYear(),
+    deadlineDate.getMonth(),
+    deadlineDate.getDate()
+  );
+
+  return Math.round((startOfDeadline - startOfToday) / (1000 * 60 * 60 * 24));
 }
 
 function getCategory(activity) {
